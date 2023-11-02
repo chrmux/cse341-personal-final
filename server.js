@@ -37,6 +37,5 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:😢'));
 startStandaloneServer(server, {
   listen: { port: 8080 },
 }).then(({ url }) => {
-  console.log(process.env.NODE_ENV.trim() === 'dev') // true
   console.log(`Server ready at ${url}`);
 });
