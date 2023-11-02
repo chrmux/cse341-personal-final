@@ -1,9 +1,0 @@
-{
-    "port": 8080,
-    "nodeEnv": "development",
-    "origin": "http://localhost:8080",
-    "jwtAccessTokenExpiresIn": 15,
-    "jwtRefreshTokenExpiresIn": 60
-  }
-  
-  
