@@ -1,0 +1,2 @@
+GET http://localhost:8080/graphql 
+Authorization: Bearer JWT_ACCESS_TOKEN

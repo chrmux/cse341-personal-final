@@ -34,7 +34,7 @@ class Auth {
     if (req.request?.headers) {
       const authHeader = req.request.headers.authorization
       if (authHeader) {
-        const token = authHeader.replace('Bearer ', 'token')
+        const token = authHeader.replace('Bearer ', '')
         if (!token) {
           return null
         }
