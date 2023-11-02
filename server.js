@@ -7,11 +7,6 @@ const { startStandaloneServer } = require("@apollo/server/standalone");
 const dotenv = require('dotenv');
 dotenv.config();
 
-mongoose.connect(
-  process.env.MONGODB_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-)
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -27,8 +22,7 @@ const server = new ApolloServer({
 })
 
 
-const dev_db_url = 'mongodb://localhost:27017/car';
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
