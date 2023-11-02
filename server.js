@@ -4,7 +4,7 @@ const Auth = require('./services/auth.service')
 const typeDefs = require('./graphql/schema/index')
 const resolvers = require('./graphql/resolvers/index')
 const { startStandaloneServer } = require("@apollo/server/standalone");
-
+require('dotenv').config()
 
 mongoose.connect(
   process.env.MONGODB_URI,
