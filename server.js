@@ -7,7 +7,7 @@ const { startStandaloneServer } = require("@apollo/server/standalone");
 
 
 mongoose.connect(
-  "mongodb+srv://chrmux:Jnm01205018019@cluster0.2tnu7rp.mongodb.net/",
+  process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true }
 )
 
