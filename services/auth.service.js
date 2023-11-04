@@ -21,7 +21,7 @@ class Auth {
   static generateJwt({ username, email, userId }) {
     return jwt.sign(
       { userId, email, username },
-      `process.env.TOKEN_SECRET`,
+      process.env.TOKEN_SECRET,
       { expiresIn: '30 days' }
     )
   }
