@@ -4,8 +4,7 @@ const Auth = require('./services/auth.service')
 const typeDefs = require('./graphql/schema/index')
 const resolvers = require('./graphql/resolvers/index')
 const { startStandaloneServer } = require("@apollo/server/standalone");
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config()
 
 const server = new ApolloServer({
   typeDefs,

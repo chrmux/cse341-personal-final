@@ -9,28 +9,19 @@ const userType = gql`
     image: String
   }
   
-  type Code{
-    email:String
-    code:String!
+  type Car{
+    name: String!
+      price: Int!
+      imageUrl: String!
+      category: String!
+      description: String!
+      features: String!
+      likes: Int
+      mileages: String
+      rating: Int
+      username: String
   }
 `
-
-const mcqType= gql`
-  type Test{
-    title:String!
-    createdAt:String!
-    image:String
-  }
-  
-  type Question{
-      description:String!
-      test_id:String!
-      type:String!
-      order:Int!
-    }
-`
-
 module.exports = {
   userType,
-  mcqType
 };

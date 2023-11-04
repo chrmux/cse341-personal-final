@@ -1,14 +1,16 @@
-const CarModel = require('../../models/carModel')
+const carModel = require('../../models/carModel');
+const Car = require('../../models/carModel')
+const User = require('../../models/userModel')
 
 const carResolvers = {
     Query: {
         /* GET ALL CARS */
-        getAllCars: async (root, args, { Car }) => {
-          const allCars = await CarModel.find().sort({ createdDate: 'desc' });
-          return allCars;
+        getAllCars: async (root, args ) => {
+          const car = await Car.find().sort({ createdDate: 'desc' });
+          return car;
         },
         /* GET A CAR */
-        getCar: async (root, { _id }, { Car }) => {
+        getCar: async (root, { _id } ) => {
           const car = await Car.findOne({ _id }).populate({
             path: 'owner',
             model: 'Car'
@@ -17,7 +19,7 @@ const carResolvers = {
         },
     
         /* SEARCH CAR */
-        searchCars: async (root, { searchTerm }, { Car }) => {
+        searchCars: async (root, { searchTerm }) => {
           // If searchTerm matches Car(s) return it/them
           if (searchTerm) {
             const searchResults = await Car.find(
@@ -44,7 +46,7 @@ const carResolvers = {
           all cars by a specific user as it described by Scehma 
           getUserCars(username: String!): [Car] v
         */
-        getUserCars: async (root, { username }, { Car }) => {
+        getUserCars: async (root, { username } ) => {
           const userCars = await Car.find({ username }).sort({
             createdDate: 'desc'
           });
@@ -68,7 +70,6 @@ const carResolvers = {
                 rating,
                 username
               },
-              { Car }
             ) => {
               const newCar = await new Car({
                 name,
@@ -100,7 +101,6 @@ const carResolvers = {
                 mileages,
                 rating
               },
-              { Car }
             ) => {
               const updatedCar = await Car.findOneAndUpdate(
                 { _id },
@@ -121,7 +121,7 @@ const carResolvers = {
               return updatedCar;
             }
     },
-    deleteUserCar: async (root, { _id }, { Car }) => {
+    deleteUserCar: async (root, { _id }) => {
         const car = await Car.findOneAndRemove({ _id });
         return car;
       },
@@ -129,18 +129,18 @@ const carResolvers = {
       /* LOGGEDIN USER CAN LIKE ANY Car */
       likeCar: async (root, { _id, username }, { Car, User }) => {
         // Increase Car's like number
-        const car = await Car.findOneAndUpdate({ _id }, { $inc: { likes: 1 } });
+        const car = await carModel.findOneAndUpdate({ _id }, { $inc: { likes: 1 } });
   
         // User -> addToSet will add that above liked car to favorites array list
-        const user = await User.findOneAndUpdate(
+        const user = await userModel.findOneAndUpdate(
           { username },
           { $addToSet: { favorites: _id } }
         );
   
-        return car;
+        return car, user;
       },
       /* LOGGEDIN USER CAN UNLIKE ANY Car */
-      unlikeCar: async (root, { _id, username }, { Car, User }) => {
+      unlikeCar: async (root, { _id, username }) => {
         // Decrease Car's like number
         const car = await Car.findOneAndUpdate({ _id }, { $inc: { likes: -1 } });
   
@@ -150,7 +150,7 @@ const carResolvers = {
           { $pull: { favorites: _id } }
         );
   
-        return car;
+        return car, user;
       }
 };
 
