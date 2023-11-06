@@ -31,7 +31,7 @@ class Auth {
   }
 
   static getUserId({ req = {}, authToken = '' }) {
-    if (req.request.headers) {
+    if (req.request?.headers) {
       const authHeader = req.request.headers.authorization
       if (authHeader) {
         const token = authHeader.replace('Bearer ', '')
@@ -51,4 +51,3 @@ class Auth {
 }
 
 module.exports = Auth
-

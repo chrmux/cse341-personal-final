@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const {Schema, model} = require('mongoose')
+
 
 const CarSchema = new Schema({
   name: {
@@ -51,4 +51,4 @@ CarSchema.index({
   "$**": "text"
 })
 
-module.exports = mongoose.model('Car', CarSchema);
+module.exports = model('Car', CarSchema);

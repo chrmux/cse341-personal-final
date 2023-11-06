@@ -1,5 +1,6 @@
+const gql = require("graphql-tag");
 
-const User = `
+const typeDefs = gql`
   type User {
     id: ID!
     email: String!
@@ -17,5 +18,6 @@ const User = `
     signup(email: String!, username: String!, password: String!): String!,
     login(email: String, username: String, password: String!): Token!,
   }`
+;
 
-module.exports = User
+module.exports = { typeDefs };

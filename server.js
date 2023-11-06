@@ -1,26 +1,10 @@
-const { ApolloServer } = require('@apollo/server')
+const { ApolloServer, gql } = require('apollo-server');
 const mongoose = require('mongoose')
-const Auth = require('./services/auth.service')
+const resolvers = require('./graphql/resolvers/index');
 const typeDefs = require('./graphql/schema/index')
-const resolvers = require('./graphql/resolvers/index')
-const { startStandaloneServer } = require("@apollo/server/standalone");
 require('dotenv').config()
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: req => {
-    return {
-      ...req,
-      userId:
-        req
-          ? Auth.getUserId({req})
-          : null
-    };
-  }
-})
-
-
+// Define your GraphQL schema using the gql tag
+// Create an Apollo Server and start it on a specific port
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
@@ -33,8 +17,8 @@ db.on('open', () => console.info('Database connected!✨'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:😢'));
 
 
-startStandaloneServer(server, {
-  listen: { port: 8080 },
-}).then(({ url }) => {
+const server = new ApolloServer({ typeDefs, resolvers });
+
+server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`);
 });
