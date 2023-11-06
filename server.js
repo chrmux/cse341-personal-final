@@ -11,6 +11,11 @@ mongoose.connect(mongoDB, {
   useUnifiedTopology: true
 });
 
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('open', () => console.info('Database connected!✨'));
+db.on('error', console.error.bind(console, 'MongoDB connection error:😢'));
+
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
