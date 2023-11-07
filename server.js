@@ -21,15 +21,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:😢'));
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [
-    // Install a landing page plugin based on NODE_ENV
-    process.env.production === 'production'
-      ? ApolloServerPluginLandingPageProductionDefault({
-          graphRef: 'my-graph-id@my-graph-variant',
-          footer: false,
-        })
-      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
-  ],
 });
 
 server.listen().then(({ url }) => {
