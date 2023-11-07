@@ -1,2 +1,2 @@
-GET http://localhost:8080/graphql 
+GET https://localhost:4000/ 
 Authorization: Bearer JWT_ACCESS_TOKEN

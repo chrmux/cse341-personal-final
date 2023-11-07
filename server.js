@@ -1,4 +1,5 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
+const { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } = require('@apollo/server/plugin/landingPage/default');
 const mongoose = require('mongoose')
 const resolvers = require('./graphql/resolvers/index');
 const typeDefs = require('./graphql/schema/index')
@@ -17,7 +18,19 @@ db.on('open', () => console.info('Database connected!✨'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:😢'));
 
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [
+    // Install a landing page plugin based on NODE_ENV
+    process.env.NODE_ENV === 'production'
+      ? ApolloServerPluginLandingPageProductionDefault({
+          graphRef: 'my-graph-id@my-graph-variant',
+          footer: false,
+        })
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+  ],
+});
 
 server.listen().then(({ url }) => {
   console.log(`Server ready at ${url}`);
