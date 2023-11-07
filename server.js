@@ -1,4 +1,4 @@
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer, gql } = require('apollo-server');
 const { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } = require('@apollo/server/plugin/landingPage/default');
 const mongoose = require('mongoose')
 const resolvers = require('./graphql/resolvers/index');
@@ -23,7 +23,7 @@ const server = new ApolloServer({
   resolvers,
   plugins: [
     // Install a landing page plugin based on NODE_ENV
-    process.env.NODE_ENV === 'production'
+    process.env.production === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({
           graphRef: 'my-graph-id@my-graph-variant',
           footer: false,
