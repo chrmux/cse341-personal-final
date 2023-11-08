@@ -12,9 +12,10 @@ type User {
 }
 
 
-  input UserInput {
+  input UpdateUserInput  {
     username: String
     email: String
+    password: String
     # Add other fields you want to update
   }
 
@@ -58,8 +59,9 @@ type Query {
 type Mutation {
   signup(email: String!, username: String!, password: String!): String!,
   login(email: String, username: String, password: String!): Token!,
-
-  updateUser(id: ID!, input: UserInput!): User 
+  logout: Boolean
+  
+  updateUser(id: ID!, input: UpdateUserInput !): User 
   deleteUser(id: ID!): User
 
   addCar(
@@ -74,7 +76,6 @@ type Mutation {
     rating: Int,
     username: String
     ): Car
-    deleteItem(id: ID!): Car
 
     deleteUserCar(_id: ID): Car
     

@@ -87,20 +87,36 @@ module.exports = {
         })
       }
     },
-    updateUser: async (_, { id }, { input }) => {
-      try {
-        const updatedUser = await User.findByIdAndUpdate(id, input, { new: true });
-
-        if (!updatedUser) {
-          throw new Error('User not found');
-        }
-
-        return updatedUser;
-      } catch (error) {
-        const customError = new Error('Invalid request');
-        customError.code = 400; // Set the status code
-        throw customError;
+    logout: (_, __, { req }) => {
+      if (!req.user) {
+        throw new Error('You must be logged in to log out');
       }
+      return true;
+    },
+    
+    updateUser: async (_, { id, input }) => {
+      const user = await User.findById(id);
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Check authorization (e.g., the user is updating their own account)
+      // Implement your own authorization logic as needed
+
+      // Update user information
+      if (input.username) {
+        user.username = input.username;
+      }
+      if (input.email) {
+        user.email = input.email;
+      }
+      // Update other fields as needed
+
+      // Save the updated user
+      const updatedUser = await user.save();
+
+      return updatedUser;
     },
 
     deleteUser: async (_, { id }, { req }) => {
@@ -146,7 +162,6 @@ module.exports = {
 
     /* Update specific user Car */
     updateUserCar: async (
-      root,
       {
         _id,
         name,
@@ -156,7 +171,8 @@ module.exports = {
         features,
         category,
         mileages,
-        rating
+        rating,
+        input
       },
       
     ) => {
