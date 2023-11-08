@@ -4,11 +4,11 @@ const Auth = require('./../../middleware/auth');
 
 module.exports = {
   Query: {
-    getUsers: async () => {
-      return User.find();
+    getUsers: async ( Auth ) => {
+      return User.find(Auth);
     },
 
-    getUser: async (parent, args) => {
+    getUser: async (parent, args, auth ) => {
       return User.findById(args.id);
     },
     /* GET ALL CARS */
@@ -103,21 +103,14 @@ module.exports = {
       }
     },
 
-    deleteUser: async (_, { id }) => {
-      try {
-        const deletedUser = await User.findByIdAndDelete(id);
-
-        if (!deletedUser) {
-          throw new Error('User not found');
-        }
-
-        return deletedUser;
-      } catch (error) {
-        const customError = new Error('Failed to delete user');
-        customError.code = 400; // Set the status code
-        throw customError;
+    deleteUser: async (_, { id }, { req }) => {
+      if (!req.user) {
+        throw new Error('You must be logged in to delete User');
       }
+      // Your delete item logic here
+      return `Item with ID ${id} deleted successfully`;
     },
+
     /* Add a Car */
     addCar: async (
       root,
@@ -187,8 +180,9 @@ module.exports = {
     },
 
     /* DELETE SPPECIFIC USER'S Car */
-    deleteUserCar: async (root, { _id }, ) => {
+    deleteUserCar: async (root, { id }) => {
       try {
+        
         const deletedCar = await Car.findByIdAndDelete(id);
 
         if (!deletedCar) {

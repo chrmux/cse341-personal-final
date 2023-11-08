@@ -20,6 +20,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:😢'));
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ req }),
 });
 
 server.listen().then(({ url }) => {

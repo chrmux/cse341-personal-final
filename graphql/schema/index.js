@@ -17,6 +17,13 @@ type User {
     email: String
     # Add other fields you want to update
   }
+
+  input RegisterUserInput {
+    username: String!
+    password: String!
+    confirmPassword: String!
+    email: String!
+  }
   
 type Token {
   jwt: ID!
@@ -52,7 +59,7 @@ type Mutation {
   signup(email: String!, username: String!, password: String!): String!,
   login(email: String, username: String, password: String!): Token!,
 
-  updateUser(id: ID!, input: UserInput!): User
+  updateUser(id: ID!, input: UserInput!): User 
   deleteUser(id: ID!): User
 
   addCar(
