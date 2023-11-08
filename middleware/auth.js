@@ -22,7 +22,7 @@ class Auth {
     return jwt.sign(
       { userId, email, username },
       process.env.TOKEN_SECRET,
-      { expiresIn: '30 days' }
+      { expiresIn: '1 hour' }
     )
   }
 

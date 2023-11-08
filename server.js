@@ -1,5 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } = require('@apollo/server/plugin/landingPage/default');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose')
 const resolvers = require('./graphql/resolvers/index');
 const typeDefs = require('./graphql/schema/index')
